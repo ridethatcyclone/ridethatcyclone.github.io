@@ -1,5 +1,5 @@
 ---
-title: Homework 1
+title: "Homework 1"
 layout: default
 ---
 
