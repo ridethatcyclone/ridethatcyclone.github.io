@@ -12,14 +12,16 @@ I installed Git from https://git-scm.com/ and got started on the web side by cre
 
 To clone the repository to my system I used the following code in the Git Bash:
 
-```cd Documents CS460_Files
+```
+cd Documents CS460_Files
 git clone https://github.com/ridethatcyclone/CS460.git
 cd CS460
 ```
 
 The other code I used was simply to commit, push, and pull to/from the repository, as follows:
 
-```git pull origin master
+```
+git pull origin master
 git add index.HTML
 git status
 git commit -m "a commit message here"
