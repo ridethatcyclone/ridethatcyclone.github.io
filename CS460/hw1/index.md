@@ -69,7 +69,7 @@ For content on the page I simply used a [Lorem Ipsum generator](http://www.lipsu
 
 My overall file setup for the website looked like this:
 
-![Image of File System](files.png)
+![Image of File System](files.PNG)
 
 It contains, within a HW1 folder, my three HTML pages, a CSS document, and the images I used within. Even though this is only for a class and not for profit, I made sure to use images labeled for reuse (with modification) from Google.
 
