@@ -18,7 +18,7 @@ layout: default
 
 Tag | Usage
 ----|------
-<p> | Creates a paragraph
-<img src="url"> | Inserts an image
-<q> | Signifies a quotation
-<blockquote> | Creates a blockquote
+``<p>`` | Creates a paragraph
+``<img src="url">`` | Inserts an image
+``<q>`` | Signifies a quotation
+``<blockquote>`` | Creates a blockquote
