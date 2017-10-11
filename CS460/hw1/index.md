@@ -66,3 +66,11 @@ This linked the Boostrap styles to my page so I was able to use their classes (S
 The entire page is encased by a div with the class "container". Within that container, each row is specified, and within each row each of their columns. In my first row I only have one column, so I don't have to specify a width because it's automatically set to 12. For the second row, I wanted two columns, so I set the class to reflect that ("col-md-6" in this case). I also used a jumbotron and a navbar, which are built in classes in Bootstrap.
 
 For content on the page I simply used a [Lorem Ipsum generator](http://www.lipsum.com/). This is the easiest way to style a page when you don't have any content to add to it.
+
+My overall file setup for the website looked like this:
+
+![Image of File System](files.png)
+
+It contains, within a HW1 folder, my three HTML pages, a CSS document, and the images I used within. Even though this is only for a class and not for profit, I made sure to use images labeled for reuse (with modification) from Google.
+
+Overall, I think my webpages look pretty decent. They're not amazing by any means, but I'm no designer :) 
