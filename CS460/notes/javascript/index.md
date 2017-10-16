@@ -72,8 +72,9 @@ var out2 = obj1["key1"];
 
 ### JQuery
 Selecting things is easier with JQuery:
+
 Javascript | JQuery
------------ | --------
+-----------|--------
 document.getElementByClass('class') | $('.class')
 document.getElementById('id') | $(#id)
 document.body.style.background=color | $('body').css('background',color)
