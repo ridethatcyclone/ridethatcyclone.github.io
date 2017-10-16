@@ -168,7 +168,16 @@ Finally, I added a button to delete the book. I also wanted to add an edit butto
 
 I wrapped it in a `btn-group` class with the hopes that I will later be able to add the edit button and functionality in.
 
-Just having these sections wasn't quite enough though, as they also needed to be able to function. The percentage needed to adjust based on the inputs given by the user, and the delete button needed to be able to remove books when prompted. For the percentage bar it was easy enough to use the variables I had created to pull my data from the forms to come up with a percentage and use that as the width percentage. (`var percentage = pagesRead/totalPages * 100;`) For the delete button I struggled a bit more. First I needed to make sure the user really wanted to delete the book. To do this I used the `confirm` method to pop up a window the user could interact with. Once I had that working, I enclosed it in an if statement, where if the user confirmed that they had meant to do that, it would remove the closest element with the 'book' class. Initially I tried to just stack parentElement calls, but Javascript didn't appreciate it.
+Just having these sections wasn't quite enough though, as they also needed to be able to function. The percentage needed to adjust based on the inputs given by the user, and the delete button needed to be able to remove books when prompted. For the percentage bar it was easy enough to use the variables I had created to pull my data from the forms to come up with a percentage and use that as the width percentage. (`var percentage = pagesRead/totalPages * 100;`) For the delete button I struggled a bit more. First I needed to make sure the user really wanted to delete the book. To do this I used the `confirm` method to pop up a window the user could interact with. Once I had that working, I enclosed it in an if statement, where if the user confirmed that they had meant to do that, it would remove the closest element with the 'book' class. Initially I tried to just stack parentElement calls, but Javascript didn't appreciate it. The code as it would look in Javascript is:
+
+```Javascript
+$('.delete-btn').on('click', function() {
+    if (confirm('Are you sure?')) {
+        $(this).closest('.book').remove();
+    }
+    else return false;
+})
+```
 
 Finally, once I had both of those working, I wrapped everything together into an `append` statement in the `submitNewBook()` function. It's very ugly, but it gets the job done:
 
@@ -179,7 +188,7 @@ function submitNewBook() {
     }
     . . .
     else {
-        /* ADD BOOK OBJECT TO BOOKSHELF */
+        /* ADD BOOK TO BOOKSHELF */
         var percentage = (pagesRead/totalPages) * 100;
         $('.bookshelf').append("<div class='book'>\
         <dl><dt class='dtTitle'>" + title + "</dt>\
@@ -194,3 +203,23 @@ function submitNewBook() {
     }
 }
 ```
+
+Finally, I just had to add a function to `main()` to make sure that new books were submitted and the forms cleared properly:
+
+```Javascript
+function main() {
+    . . .
+
+    $('.submit-btn').on('click', function() {
+        submitNewBook();
+        $('#add')[0].reset();
+    })
+}
+```
+
+And with that my site was complete! At least, for now. I still would like to add some other functionality to it, such as the ability to edit entries (and update page counts), as well as to store the information either in local storage or cookies, so that a user can keep visiting the site and have it still remember the books they're reading. But overall, I am very happy with the result.
+
+This is what the finished page looks like:
+
+![Image of page with Add section open](add.png)
+![Image of page with Bookshelf section open](bookshelf.png)
