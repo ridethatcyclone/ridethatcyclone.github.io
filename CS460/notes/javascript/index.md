@@ -74,9 +74,9 @@ var out2 = obj1["key1"];
 Selecting things is easier with JQuery:
 Javascript | JQuery
 ----------- | --------
-`document.getElementByClass('class')` | `$('.class')`
-`document.getElementById('id')` | `$(#id)`
-`document.body.style.background=color` | `$('body').css('background',color)`
+document.getElementByClass('class') | $('.class')
+document.getElementById('id') | $(#id)
+document.body.style.background=color | $('body').css('background',color)
 
 ### Examples used in homework
 ```Javascript
