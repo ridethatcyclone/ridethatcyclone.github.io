@@ -8,6 +8,11 @@ For the first homework we were given the assignment of creating a series of simp
 
 Before I could begin diving in with Bootstrap, however, I had to get started with Git first. I've never used Git either, though I had some experience with Mercurial so I wasn't totally in the dark.
 
+## Links
+1. [Home](https://ridethatcyclone.github.io/)
+2. [Assignment Page](http://www.wou.edu/~morses/classes/cs46x/assignments/HW1.html)
+3. [Code Repository](https://github.com/ridethatcyclone/CS460/tree/master/HW1)
+
 ### Getting started: Git
 I installed Git from [here](https://git-scm.com/) and got started on the web side by creating a repository with an empty README file, so that I could clone it onto my machine. This seemed like an easier path to start with than starting on the machine and syncing it to the repository.
 
@@ -74,5 +79,3 @@ My overall file setup for the website looked like this:
 It contains, within a HW1 folder, my three HTML pages, a CSS document, and the images I used within. Even though this is only for a class and not for profit, I made sure to use images labeled for reuse (with modification) from Google.
 
 Overall, I think my webpages look pretty decent. They're not amazing by any means, but I'm no designer :)
-
-Code for my pages is located [here](https://github.com/ridethatcyclone/CS460/tree/master/HW1).
