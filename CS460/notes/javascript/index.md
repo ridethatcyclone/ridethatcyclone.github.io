@@ -69,3 +69,52 @@ var obj1 = {
 var out = obj1.key1;
 var out2 = obj1["key1"];
 ```
+
+### JQuery
+Selecting things is easier with JQuery:
+Javascript | JQuery
+-----------|--------
+`document.getElementByClass('class')` | `$('.class')`
+`document.getElementById('id')` | `$(#id)`
+`document.body.style.background=color` | `$('body').css('background',color)`
+
+### Examples used in homework
+```Javascript
+function main() {
+    // Hide element
+    $('.add-form').hide();
+
+    // Slide toggle element
+    $('.options').on('click', function() {
+        $(this).next().slideToggle(400);
+    })
+
+    // Delete element when button is pressed
+    $('.delete-btn').on('click', function() {
+        if (confirm('Are you sure?')) {
+            $(this).closest('.book').remove();
+        }
+        else return false;
+    })
+
+    // Submit form
+    $('.submit-btn').on('click', function() {
+        submitNewBook();
+        $('#add')[0].reset();
+    })
+}
+
+function submitNewBook() {
+    var num = $('.pages').valueAsNumber;
+    var text = $('.title').value;
+
+    if (x < y) {
+        alert('Nope!');
+        return;
+    }
+    else {
+        $('.bookshelf').append("<div>Content</div>");
+    }
+}
+
+$(document).ready(main);
