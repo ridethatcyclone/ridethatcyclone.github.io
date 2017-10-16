@@ -28,3 +28,45 @@ var ex;
 var ex1 = NULL;
 
 ```
+
+### Loops
+```Javascript
+for (var i=0; i < 10; i++) {
+    // execute
+}
+
+var j = 10;
+while (j > 0) {
+    //execute
+    j--;
+}
+
+var k;
+switch(k) {
+    case (1):
+        //execute
+        break;
+    case (2):
+        //execute
+        break;
+    default:
+        //execute
+        break;
+}
+```
+
+### Objects
+```Javascript
+var obj1 = {
+    key1: value1,
+    key2: "value2",
+    key3: value3,
+    x: function() {
+        //execute
+    }
+}
+
+//Access properties two ways
+var out = obj1.key1;
+var out2 = obj1["key1"];
+```
