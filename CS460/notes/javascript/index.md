@@ -6,27 +6,26 @@ layout: default
 ## Notes on Javascript and JQuery
 
 ### Including Javascript in the Code
+Javascript can be included inline with the `script` tag, or you can include a link to an outside script. Either way, should be at the bottom of the body tag.
 ```HTML
-<!-- Javascript can be included inline using the script tag -->
 <script>
 document.getElementByClass('.class').hide();
 </script>
 
-<!-- Or you can include a link to an outside script -->
-<script src="main.js"></script> <!-- NOTE: insert at the bottom of the body -->
+<script src="main.js"></script>
 ```
 
 ### Declarations
+Declare functions with the function keyword, a name, and parameters.
 ```Javascript
-// Declare functions with the function keyword, a name, and parameters
 function main(param) {
     // body
 }
-
-// Declare variables with var and a name
+```
+Declare variables with `var` and a name
+```Javascript
 var ex;
 var ex1 = NULL;
-
 ```
 
 ### Loops
