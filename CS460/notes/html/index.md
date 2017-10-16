@@ -50,7 +50,7 @@ Tag | Usage
     </tr>
     <tr>
         <td>Item1</td>
-        <td colspan="2">Item2</td>
+        <td colspan="2">Item2, spans multiple columns!</td>
     </tr>
     <tr>
         <td>Item4</td>
@@ -68,7 +68,7 @@ Tag | Usage
     </tr>
     <tr>
         <td>Item1</td>
-        <td colspan="2">Item2</td>
+        <td colspan="2">Item2, spans multiple columns!</td>
     </tr>
     <tr>
         <td>Item4</td>
