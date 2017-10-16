@@ -118,3 +118,4 @@ function submitNewBook() {
 }
 
 $(document).ready(main);
+```
