@@ -1,5 +1,5 @@
 ---
-title: Homework 2: Javascript and JQuery
+title: "Homework 2"
 layout: default
 ---
 
@@ -106,7 +106,8 @@ function submitNewBook() {
     var totalPages = document.getElementById('totalPagesIn').value;
     var pagesRead = document.getElementById('pagesReadIn').value;
 
-    console.log("Title: " + title + ", Author: " + author + ", Total Pages: " + totalPages + ", Pages Read: " + pagesRead);
+    console.log("Title: " + title + ", Author: " + author + ", \
+    Total Pages: " + totalPages + ", Pages Read: " + pagesRead);
 }
 ```
 
@@ -134,4 +135,61 @@ function submitNewBook() {
 }
 ```
 
-I ran into an issue while I was testing these, however. It would allow any input into the number fields, regardless of what my conditionals demanded. I ended up discovering the issue to be the `.value` part of my code. Every time I was pulling the numbers from the input fields, despite the fact that the input fields were number types, it was pulling them as strings. To remedy this, I simply switched to `var totalPages = document.getElementById('totalPagesIn').valueAsNumber`. This fixed the problem and the conditionals started working as intended. 
+I ran into an issue while I was testing these, however. It would allow any input into the number fields, regardless of what my conditionals demanded. I ended up discovering the issue to be the `.value` part of my code. Every time I was pulling the numbers from the input fields, despite the fact that the input fields were number types, it was pulling them as strings. To remedy this, I simply switched to `var totalPages = document.getElementById('totalPagesIn').valueAsNumber`. This fixed the problem and the conditionals started working as intended.
+
+Adding the information back to the page is where things got extra complicated. I tried to use the append method to simply add a div in, but that got complex trying to write it within the Javascript. So instead I mocked up what it should look like on my HTML file and adjusted that over for Javascript. The basic HTML itself looks something like this:
+
+```html
+<div class='book'>
+    <dl>
+        <dt class='dtTitle'>Title</dt>
+        <dd>by Author</dd>
+        <dd>X out of Y pages read</dd>
+    </dl>
+</div>
+```
+
+I used a description list to achieve this, with a little bit of extra styling in the background. But I wanted to add more to this. Specifically, a progress bar and edit and delete buttons. I started with the progress bar, as I figured that would likely be the easiest way to do it. To create the progress bar, I simply made two nested divs that were the same height but different widths, and filled them in different colors. So for a progress bar showing the book is 60% read, the HTML would look like:
+
+```html
+<div style="width:100%; background-color:#ccc; height:30px;">
+    <div style="width:60%; background-color:#89e589; height:30px;">
+    </div>
+</div>
+```
+
+Finally, I added a button to delete the book. I also wanted to add an edit button to change the values, but for the purposes of this assignment I considered that a little out of scope. Perhaps in a future feature update. For the delete button I used a simple Boostrap button class:
+
+```html
+<div class='editButtons btn-group'>
+    <button class='btn btn-primary delete-btn'>delete</button>
+</div>
+```
+
+I wrapped it in a `btn-group` class with the hopes that I will later be able to add the edit button and functionality in.
+
+Just having these sections wasn't quite enough though, as they also needed to be able to function. The percentage needed to adjust based on the inputs given by the user, and the delete button needed to be able to remove books when prompted. For the percentage bar it was easy enough to use the variables I had created to pull my data from the forms to come up with a percentage and use that as the width percentage. (`var percentage = pagesRead/totalPages * 100;`) For the delete button I struggled a bit more. First I needed to make sure the user really wanted to delete the book. To do this I used the `confirm` method to pop up a window the user could interact with. Once I had that working, I enclosed it in an if statement, where if the user confirmed that they had meant to do that, it would remove the closest element with the 'book' class. Initially I tried to just stack parentElement calls, but Javascript didn't appreciate it.
+
+Finally, once I had both of those working, I wrapped everything together into an `append` statement in the `submitNewBook()` function. It's very ugly, but it gets the job done:
+
+```Javascript
+function submitNewBook() {
+    if . . . {
+        . . .
+    }
+    . . .
+    else {
+        /* ADD BOOK OBJECT TO BOOKSHELF */
+        var percentage = (pagesRead/totalPages) * 100;
+        $('.bookshelf').append("<div class='book'>\
+        <dl><dt class='dtTitle'>" + title + "</dt>\
+        <dd>by " + author + "</dd>\
+        <dd>" + pagesRead + " out of " + totalPages + " pages read</dd></dl>\
+        <divstyle='width:100%;background-color:#ccc; height:30px;'>\
+        <div style='width:" + percentage + "%; background-color:#89e589; height:30px;'></div></div>\
+        <div class='editButtons btn-group'>\
+        <button class='btn btn-primary delete-btn' onclick=\"if (confirm('Are you sure?')) \
+        {$(this).closest('.book').remove();}\
+         else return false;\">delete</button></div></div>");
+    }
+}
