@@ -100,16 +100,16 @@ Mostly, this was a fairly smooth process. I hit a couple of speed bumps where I 
 
 And it works:
 
-![An image of the program before any user input](cmd1.png)
+![An image of the program before any user input](cmd1.PNG)
 
 When you enter a simple command in the postfix notation, it solves the problem:
 
-![An image of the program solving 2 + 2](cmd2.png)
+![An image of the program solving 2 + 2](cmd2.PNG)
 
 When you try to divide by 0, for instance, it throws an error:
 
-![An image of the program throwing an exception](cmd3.png)
+![An image of the program throwing an exception](cmd3.PNG)
 
 And when you enter the input incorrectly, it will let you know that too:
 
-![An image of the program when input is entered in the incorrect order](cmd4.png)
+![An image of the program when input is entered in the incorrect order](cmd4.PNG)
