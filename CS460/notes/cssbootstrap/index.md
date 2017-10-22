@@ -141,4 +141,4 @@ Bootstrap uses a 12-column wide system of dividing up the page. This can be spli
 
 Using the layout builder found [here](http://www.layoutit.com/build), this is what the above layout would look like (with no content added yet):
 
-![Image of Bootstrap-generated Layout](bootstrap_example.png)
+![Image of Bootstrap-generated Layout](bootstrap_example.PNG)
