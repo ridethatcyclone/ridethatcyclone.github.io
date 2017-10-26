@@ -223,3 +223,5 @@ This is what the finished page looks like:
 
 ![Image of page with Add section open](add.png)
 ![Image of page with Bookshelf section open](bookshelf.png)
+
+Unfortunately, I also in a neurotic need to keep everything clean, deleted the branch I was working on after I merged it back into master. I don't know if there's a way to view that the branch existed, but it did. I'm just a neat freak.
