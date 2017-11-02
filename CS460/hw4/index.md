@@ -190,3 +190,47 @@ Then the page uses this ViewBag information to return something to the user. In 
 ![Image of page before form is filled](page2.PNG)
 
 ![Image of page after form is submitted](page2_b.PNG)
+
+## Part 3
+
+The last part had us create a Loan Calculator. After the previous two parts this was fairly easy, even using Model binding; the most difficult part was getting the math to work with me. However, I think it is finally set up correctly.
+
+My html was fairly straightforward. I used bootstrap to make the form look nicer than in earlier pages, however it was a very simple form. I used the "number" type to be sure that a user could not incorrectly enter characters, for instance. And I used bootstraps "form-group" and "form-control" classes to style the form. Finally, I used a Razor `@if` statement and a ViewBag element (such as was given in our example2-nodb) to be sure that the results were shown only if the form was correctly filled out. It also displayed an error if the submit button was pressed but the form was not filled out or was filled out incorrectly.
+
+My form element:
+```html
+<form method="post">
+    <div class="form-group">
+        <label for="LoanAmount">Loan Amount</label>
+        <input type="number" name="LoanAmount" class="form-control" /><br />
+    </div>
+    <div class="form-group">
+        <label for="InterestRate">Interest Rate</label>
+        <input type="number" name="InterestRate" class="form-control" /><br />
+    </div>
+    <div class="form-group">
+        <label for="TermLength">Term Length (In Months)</label>
+        <input type="number" name="TermLength" class="form-control" />
+    </div>
+        <input type="submit" value="Submit" />
+</form>
+```
+
+And my Razor code to check for the form fields:
+```html
+@if (ViewBag.ShowAnswer)
+{
+    <h2>Results</h2>
+    <div class="alert-success"><p>Initial Amount: $@ViewBag.LoanAmount<br />Interest Rate: @ViewBag.InterestRate%
+         <br />Term Length: @ViewBag.TermLength months<br />Total Amount Paid: $@ViewBag.TotalAmount <br />
+         Monthly Payments: $@ViewBag.Result</p></div>
+}
+else
+{
+    <div class="alert-warning">@ViewBag.ErrorMessage</div>
+}
+```
+
+This is what the page looks like before any forms are filled out:
+
+![Page 3 before use](page3.PNG)
