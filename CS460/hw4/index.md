@@ -38,7 +38,7 @@ To begin with, I created my initial view and controller. My View was a very simp
 </form>
 ```
 
-![An image of my first page]("page1.PNG")
+![An image of my first page](page1.PNG)
 
 Simple, but does its job. I decided to do radio buttons instead of allowing the user to input a parameter because it is easier all around to deal with. My first version of the Controller for this page looked like this:
 
@@ -78,7 +78,7 @@ In order to do the calculations, I first constructed a second View, called Resul
 @Html.ActionLink("Go again", "Conversion");
 ```
 Which looks like this, when values have been entered:
-![Image of results page]("page1_b.PNG")
+![Image of results page](page1_b.PNG)
 
 Then I used those variables to construct the logic for my Controller, in which it calculates out the values:
 
@@ -135,3 +135,58 @@ Overall this page works wonderfully. The conversions are all correct and it does
 * Limit the decimal places shown
 
 ## Part 2
+
+For the second part of the lab I decided to create a very simple Guestbook application. Without a database its functionality is limited but it provides at the very least an interesting start to a guestbook. It currently takes input from the user and returns it on the same page to "sign" the guestbook.
+
+This application only required two ActionController methods, a GET and a POST. The GET method very simply returned the View. The POST is where the interesting stuff happened. It took one parameter, a `FormCollection` object, checked to make sure the form was fully filled, and then assigned its values (along with the current `DateTime`) to the ViewBag to be used by the View.
+
+```cs
+public class GuestBookController : Controller
+{
+    [HttpGet]
+    public ActionResult Visitors()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    public ActionResult Visitors(FormCollection form)
+    {
+        foreach (var value in form)
+        {
+            if (value == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        }
+
+        ViewBag.FirstName = form["FirstName"];
+        ViewBag.LastName = form["LastName"];
+        ViewBag.Time = DateTime.Now;
+
+        return View();
+    }
+}
+```
+
+Then the page uses this ViewBag information to return something to the user. In this case, I used an `@if (IsPost)` to make sure that the information doesn't appear on the page if the form hasn't been submitted.
+
+```html
+<form method="post">
+    <label for="FirstName">First Name</label><br />
+    <input type="text" name="FirstName" value="" /><br />
+    <label for="LastName">Last Name</label><br />
+    <input type="text" name="LastName" value="" /><br /><br />
+    <input type="submit" />
+</form><br />
+
+@if (IsPost)
+{
+    <p>
+        Thanks for visiting @ViewBag.FirstName @ViewBag.LastName!
+        Your visit was logged at @ViewBag.Time.
+    </p>
+}
+```
+
+![Image of page before form is filled](page2.PNG)
+
+![Image of page after form is submitted](page2_b.PNG)
