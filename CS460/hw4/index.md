@@ -265,11 +265,11 @@ public ActionResult Index(double? LoanAmount, double? InterestRate, double? Term
         double Result = LoanAmount.Value / D;
 
         // Add to ViewBag
-        ViewBag.Result = Result.ToString("0.##");
-        ViewBag.LoanAmount = LoanAmount.Value.ToString("0.##");
+        ViewBag.Result = Result.ToString("0.00");
+        ViewBag.LoanAmount = LoanAmount.Value.ToString("0.00");
         ViewBag.InterestRate = InterestRate.Value;
         ViewBag.TermLength = TermLength.Value;
-        ViewBag.TotalAmount = (LoanAmount.Value + (LoanAmount.Value * I)).ToString("0.##");        
+        ViewBag.TotalAmount = (Result * TermLength.Value).ToString("0.00");      
 
         ViewBag.ShowAnswer = true;
     }
