@@ -234,3 +234,51 @@ else
 This is what the page looks like before any forms are filled out:
 
 ![Page 3 before use](page3.PNG)
+
+Once I had that working, it was time to move on to the logic. The default ActionResult method is mostly the same as before, except it sets `@ViewBag.ShowAnswer` to false, to be sure my code at the bottom of my HTML still works correctly.
+
+```cs
+public ActionResult Index()
+{
+    ViewBag.ShowAnswer=false;
+    return View();
+}
+```
+
+The POST method is where things get interesting. To begin with, I checked to make sure all my inputs are valid. If they weren't, I set ShowAnswer to false and output an error message. If they are all input correctly, then I have some calculations to do. The math is a little boring, to be honest, but in the end I got it all correct. I then output all the values I would need on the page to ViewBag variables, and I formatted the monetary values to 2 decimal points.
+
+```cs
+[HttpPost]
+public ActionResult Index(double? LoanAmount, double? InterestRate, double? TermLength)
+{
+    if (LoanAmount == null || InterestRate == null || TermLength == null)
+    {
+        ViewBag.ErrorMessage = "Inputs are invalid. Please fill out all fields";
+        ViewBag.ShowAnswer = false;
+    }
+    else
+    {
+        // calculations
+        double IR = InterestRate.Value / 100;
+        double I = IR / 12;
+        double D = ((Math.Pow(1 + I, TermLength.Value)) - 1) / (I * Math.Pow((1 + I), TermLength.Value));
+        double Result = LoanAmount.Value / D;
+
+        // Add to ViewBag
+        ViewBag.Result = Result.ToString("0.##");
+        ViewBag.LoanAmount = LoanAmount.Value.ToString("0.##");
+        ViewBag.InterestRate = InterestRate.Value;
+        ViewBag.TermLength = TermLength.Value;
+        ViewBag.TotalAmount = (LoanAmount.Value + (LoanAmount.Value * I)).ToString("0.##");        
+
+        ViewBag.ShowAnswer = true;
+    }
+    return View();
+}
+```
+
+With all that setup, this is how it looks with an output!
+
+![Image of form once filled](page3_b.PNG)
+
+![Image of results](page3_c.PNG)
