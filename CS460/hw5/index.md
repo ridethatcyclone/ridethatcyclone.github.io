@@ -166,31 +166,31 @@ Now, finally, it was time to move on to my form. I started off by pre-generating
 
 First I started with a container class, then 4 rows. The first row contained 3 input fields, the second row contained 1, the third had 4, and the last had only the submit button. All of this was enclosed in a Razor `Html.BeginForm()` tag.
 
-The basic page, without any content:
+The basic page, without any content besides which field will go where:
 
 ```html
 <div class="container">
     @using (Html.BeginForm())
     {
         <div class="row">
-            <div class="col-md-3 col-md-offset-2"></div>
-            <div class="col-md-2"></div>
-            <div class="col-md-2"></div>
+            <div class="col-md-3 col-md-offset-2">Full Name</div>
+            <div class="col-md-2">Customer ID</div>
+            <div class="col-md-2">Date of Birth</div>
         </div>
 
         <div class="row">
-            <div class="col-md-7 col-md-offset-2"></div>
+            <div class="col-md-7 col-md-offset-2">Street Address</div>
         </div>
 
         <div class="row">
-            <div class="col-md-2 col-md-offset-2"></div>
-            <div class="col-md-1"></div>
-            <div class="col-md-2"></div>
-            <div class="col-md-2"></div>
+            <div class="col-md-2 col-md-offset-2">City</div>
+            <div class="col-md-1">State</div>
+            <div class="col-md-2">Zip Code</div>
+            <div class="col-md-2">County</div>
         </div>
 
         <div class="row">
-            <div class="col-md-3 col-md-offset-4"></div>
+            <div class="col-md-3 col-md-offset-4">Submit</div>
         </div>
     }
 </div>
@@ -199,3 +199,105 @@ The basic page, without any content:
 Using [this site](http://shoelace.io/) for a wireframe, this is what that would translate to:
 
 ![Bootstrap wireframe](wireframe.PNG)
+
+For the actual form elements, I firstly decided to use bootstraps `input-group` and `input-group-lg` classes, because I like the way they look. However, they also overwrite the max width of the elements, so for some of them I had to toss a style into the HTML tag as well. Then I mostly used Razor elements to fill in the labels and the fields as well as the validation messages.
+
+For instance, this was my code for the first three fields, which took the most styling (as originally, the ID field wasn't wide enough to show the whole ID, then when I switched it to 2 columns instead of 1, it was too wide and annoyed me. So finally, I messed with the margins.)
+
+```html
+<div class="col-md-3 col-md-offset-2">
+    <div class="input-group input-group-lg" style="width:100%;">
+        @Html.LabelFor(model => model.FullName, htmlAttributes: new { @class = "control-label"} )
+        @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control input-lg"}})
+        @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger"})
+    </div>
+</div>
+<div class="col-md-2">
+    <div class="input-group input-group-lg" style="width:50%;">
+        <label for="CustomerID" class="control-label">ID</label>
+        @Html.EditorFor(model => model.CustomerID, new { htmlAttributes = new { @class = "form-control input-lg" } })
+        @Html.ValidationMessageFor(model => model.CustomerID, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="col-md-2">
+    <div class="input-group input-group-lg" style="width:150%; margin-left:-50%;">
+        @Html.LabelFor(model => model.DateOfBirth, htmlAttributes: new { @class = "control-label" })
+        @Html.EditorFor(model => model.DateOfBirth, new { htmlAttributes = new { @class = "form-control input-lg" } })
+        @Html.ValidationMessageFor(model => model.DateOfBirth, "", new { @class = "text-danger" })
+    </div>
+</div>
+```
+
+There was also a `@Html.ValidationSummary(true, "", new { @class = "text-danger" })` at the beginning of the form, to set up the validation messages.
+
+And my submit button at the bottom was styled like this:
+
+```html
+<div class="row">
+    <div class="col-md-offset-4 col-md-3">
+        <div class="input-group input-group-lg" style="width:100%;">
+            <input type="submit" value="Submit" class="btn btn-lg btn-primary" style="border-radius:0px; width:100%;" />
+        </div>
+    </div>
+</div>
+```
+
+And finally, I added a header and centered it a little weirdly above my not-actually-quite-centered form:
+
+```html
+<div class="page-header" style="text-align:center; width:92%">
+    <h1>Change of Address Form</h1>
+</div>
+```
+Overall, the form page ended up looking like this:
+
+![Image of form](form.PNG)
+
+It also made sure all fields were filled:
+
+![Image of form errors](form_errors.PNG)
+
+And it even correctly checks that the strings are the right length:
+
+![Image of form errors](form_errors2.PNG)
+
+
+Once my form was looking good, I had to get the Controller working, so that everything could be tied together. This luckily was fairly simple, as I didn't implement anything for the form other than a create function.
+
+The Index function was fairly simple. First, for the Controller, I had to instantiate a RequestContext object to be used. Then I simply returned a View using that object to call the table and output it to a list.
+
+The Create GET view was even easier, as all it does it return the View of the form.
+
+For the POST method, I simply followed the code in the example to generate a new Request object to then add to the database. If it succeeded in this, it redirected the user to the Index page, where they could see the new request added to the table.
+
+The controller code is as follows:
+
+```cs
+public class RequestsController : Controller
+{
+    private RequestContext db = new RequestContext();
+
+    public ActionResult Index()
+    {
+        return View(db.Requests.ToList());
+    }
+
+    public ActionResult Create()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    public ActionResult Create([Bind(Include = "FullName, DateOfBirth, CustomerID, StreetAddress, City, State, ZipCode, County")] Request request)
+    {
+        if (ModelState.IsValid)
+        {
+            db.Requests.Add(request);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        return View(request);
+    }
+}
+```
