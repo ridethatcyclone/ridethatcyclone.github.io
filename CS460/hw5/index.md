@@ -301,3 +301,17 @@ public class RequestsController : Controller
     }
 }
 ```
+
+And that was it! Everything was ready to go and working. I added a couple of entries to the table to be sure it worked fine:
+
+![Image of form](form_2.PNG)
+
+A lot of the nitpicky problems I ran into over the course of this assignment had more to do with me forgetting a line in a file than anything else.
+
+Ways I could improve this application in the future:
+* Add edit and delete options
+* Generate the Customer ID (Decided not to pursue this as the assignment suggested it should be an entry field)
+* Fix up the validation messages so they are more
+* Work on bootstrap layout so form looks nice no matter the screen size, as right now... They struggle.
+
+Overall, I am very happy with how this application turned out!
