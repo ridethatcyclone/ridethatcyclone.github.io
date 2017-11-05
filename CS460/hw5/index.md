@@ -159,3 +159,43 @@ public class Request
     public string County { get; set; }
 }
 ```
+
+The reasoning for the code above my CustomerID is that I continually ran into an issue submitting my form (later on, obviously) in which the program would error out due to CustomerID being null (which is wasn't). It's a little weird in the details, but essentially it wanted me to input a generated number in a different way than I was aiming for. The code above was found on StackOverflow on a question in which the questioner had the exact same issue I did.
+
+Now, finally, it was time to move on to my form. I started off by pre-generating a Create view so that I could see how MVC did it, then built my own based on what I learned. I decided I wanted to make my form a little unique looking and centered, more like an actual form someone would fill out on paper. Using [this](http://www.layoutit.com/) tool I made a rough wireframe for how the bootstrap groups needed to look then got to work.
+
+First I started with a container class, then 4 rows. The first row contained 3 input fields, the second row contained 1, the third had 4, and the last had only the submit button. All of this was enclosed in a Razor `Html.BeginForm()` tag.
+
+The basic page, without any content:
+
+```html
+<div class="container">
+    @using (Html.BeginForm())
+    {
+        <div class="row">
+            <div class="col-md-3 col-md-offset-2"></div>
+            <div class="col-md-2"></div>
+            <div class="col-md-2"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-7 col-md-offset-2"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-2 col-md-offset-2"></div>
+            <div class="col-md-1"></div>
+            <div class="col-md-2"></div>
+            <div class="col-md-2"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3 col-md-offset-4"></div>
+        </div>
+    }
+</div>
+```
+
+Using [this site](http://shoelace.io/) for a wireframe, this is what that would translate to:
+
+![Bootstrap wireframe](wireframe.PNG)
