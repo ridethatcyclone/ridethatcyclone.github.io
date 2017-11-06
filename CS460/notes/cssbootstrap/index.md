@@ -142,3 +142,26 @@ Bootstrap uses a 12-column wide system of dividing up the page. This can be spli
 Using the layout builder found [here](http://www.layoutit.com/build), this is what the above layout would look like (with no content added yet):
 
 ![Image of Bootstrap-generated Layout](bootstrap_example.PNG)
+
+You can also offset by x columns by using similar classes - to offset your columns by 2 column spaces, use `col-md-offset-2`, etc.
+
+### Useful Bootstrap classes
+All should probably be used with a basic class (i.e., `table` or `navbar`) along with the specific one
+
+* Tables
+  * table-striped
+  * table-bordered
+  * table-hover
+  * table-condensed
+* Navbars
+  * navbar-default
+  * navbar-inverse
+  * navbar-header
+  * navbar-brand
+  * navbar-nav
+* Forms
+  * form-group
+  * form-control - on input
+  * form-inline
+  * form-horizontal
+    * add label-control to all labels for horizontal forms
