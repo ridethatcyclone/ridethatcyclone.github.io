@@ -65,3 +65,17 @@ Other useful code snippets:
     //Logic
 }
 ```
+
+### Create and Connect to a Database
+1. In Server Explorer, click on Add connection
+2. Select Microsoft SQL Server
+3. Connect to LocalDb and enter a name for the database
+4. Confirm that you want to create a new database
+5. Create a new project
+6. Project -> Add New item
+7. Data -> ADO.NET Entity Data Model
+8. NameContext (where 'Name' is the name of your DB, preferably)
+9. Code First From Database
+10. Select the database you created
+11. Select tables to import (all, for this one)
+12. Make sure Web.config has connection string
