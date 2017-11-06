@@ -14,7 +14,7 @@ For this assignment, we were tasked with recreating the DMV change of address fo
 
 ## Getting Started
 
-To begin with, I generated the project itself (a simple MVC Web app). I used what we had learned in class to create the database using the Server Explorer (Will add into [notes](https://ridethatcyclone.github.io/notes/) page how to do so). Then I created my SQL scripts to populate/clear the database. I used two scripts as per the instructions, up.sql and down.sql. The down.sql is by far the simplest file in this project, clocking in at a measly one line:
+To begin with, I generated the project itself (a simple MVC Web app). I used what we had learned in class to create the database using the Server Explorer (Will add into notes page how to do so). Then I created my SQL scripts to populate/clear the database. I used two scripts as per the instructions, up.sql and down.sql. The down.sql is by far the simplest file in this project, clocking in at a measly one line:
 
 ```sql
 DROP TABLE dbo.Requests;
