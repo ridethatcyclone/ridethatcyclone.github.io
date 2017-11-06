@@ -163,5 +163,4 @@ All should probably be used with a basic class (i.e., `table` or `navbar`) along
   * form-group
   * form-control - on input
   * form-inline
-  * form-horizontal
-    * add label-control to all labels for horizontal forms
+  * form-horizontal - add label-control to all labels for horizontal forms
