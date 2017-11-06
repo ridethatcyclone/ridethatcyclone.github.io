@@ -30,3 +30,11 @@ git checkout newBranch
     ## Alternatively, do it all on one line
 git checkout -b newBranch
 ```
+
+### Merging
+```
+    ## Start by switching back to the branch you want to merge into
+    ## Usually, master
+git checkout master
+git merge newBranch
+```
