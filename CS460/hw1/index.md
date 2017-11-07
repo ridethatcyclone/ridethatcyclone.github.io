@@ -78,4 +78,8 @@ My overall file setup for the website looked like this:
 
 It contains, within a HW1 folder, my three HTML pages, a CSS document, and the images I used within. Even though this is only for a class and not for profit, I made sure to use images labeled for reuse (with modification) from Google.
 
+My index page looks like this:
+
+![Image of index](index.PNG)
+
 Overall, I think my webpages look pretty decent. They're not amazing by any means, but I'm no designer :)
