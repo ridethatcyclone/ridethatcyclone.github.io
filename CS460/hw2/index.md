@@ -81,6 +81,26 @@ input:focus {
 }
 ```
 
+To make the menu options (Add a Book and Bookshelf) look like actual menu options, I simply made them display in blocks, got rid of the list styling, and made them larger. `display:block` also allowed them to act as buttons rather than just plain text.
+
+```css
+.options {
+    font-size: 26px;
+    list-style-type: none;
+    display: block;
+    padding: 10px;
+}
+```
+
+Then, for aesthetics, I moved the form and bookshelf over and made it larger and easier to read:
+
+```css
+.add-form, .bookshelf {
+    margin-left: 30px;
+    font-size: 18px;
+}
+```
+
 Now that I had everything styled the way I wanted it, it was time to move on to the Javascript side of things. First thing, I wanted the headers to scroll open and closed when clicked. To do this I simply created an on click event in the `main()` function in my main.js file.
 
 ```Javascript
@@ -214,6 +234,36 @@ function main() {
         submitNewBook();
         $('#add')[0].reset();
     })
+}
+```
+
+Finally, everything worked! As a finishing touch, I went ahead and styled the bookshelf entries:
+
+```css
+.book {
+    width: 70%;
+    margin-bottom: 50px;
+    margin-top: 10px;
+}
+
+.book dl dd {
+    margin-left: 10px;
+}
+
+.dtTitle {
+    font-size: 24px;
+}
+
+.dtTitle:hover {
+    background-color:white;
+}
+
+.progress-bar {
+    margin-top: -15px;
+}
+
+.editButtons {
+    margin-top: 5px;
 }
 ```
 
