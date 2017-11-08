@@ -12,6 +12,7 @@ Before I could begin diving in with Bootstrap, however, I had to get started wit
 1. [Home](https://ridethatcyclone.github.io/)
 2. [Assignment Page](http://www.wou.edu/~morses/classes/cs46x/assignments/HW1.html)
 3. [Code Repository](https://github.com/ridethatcyclone/CS460/tree/master/HW1)
+4. [Final Site](https://ridethatcyclone.github.io/460/hw1/site/index.html)
 
 ### Getting started: Git
 I installed Git from [here](https://git-scm.com/) and got started on the web side by creating a repository with an empty README file, so that I could clone it onto my machine. This seemed like an easier path to start with than starting on the machine and syncing it to the repository.
