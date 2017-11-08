@@ -1,0 +1,52 @@
+/*
+    FONT FAMILIES:
+    font-family: 'Berkshire Swash', cursive;
+    font-family: 'Julius Sans One', sans-serif;
+*/
+body {
+    background-color: #8e8e8e;
+    color:#1e1e1e;
+}
+
+.icon {
+    width:90%;
+    height:auto;
+    display:block;
+    margin: 20px auto;
+}
+
+.navbar {
+    border:none;
+    border-radius:0px;
+    margin:-30px -15px 15px -15px;
+}
+
+.container {
+    width:75%;
+}
+
+.container .jumbotron {
+    border-radius:0px;
+}
+
+.jumbotron {
+    background:#9e9e9e;
+    background-image: url("wood-bg.jpg");
+    background-size:cover;
+    margin-left:-15px;
+    margin-right:-15px;
+    margin-top:-30px;
+}
+
+.jumbotron h1 {
+    font-family: 'Julius Sans One', sans-serif;
+    font-size: 5.5em;
+    opacity:1;
+    text-align:right;
+}
+
+#mainBody {
+    background-color:gray;
+    padding:30px;
+    margin-bottom:10px;
+}
