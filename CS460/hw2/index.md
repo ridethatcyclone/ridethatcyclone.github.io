@@ -8,7 +8,7 @@ layout: default
 * [Home](https://ridethatcyclone.github.io/)
 * [Assignment Page](http://www.wou.edu/~morses/classes/cs46x/assignments/HW2.html)
 * [Code Repository](https://github.com/ridethatcyclone/CS460/tree/master/HW2)
-* [Final Site](https://ridethatcyclone.github.io/CS460/hw2/index.html)
+* [Final Site](https://ridethatcyclone.github.io/CS460/hw2/site/index.html)
 
 ## The Assignment
 
