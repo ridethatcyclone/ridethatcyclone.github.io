@@ -1,0 +1,85 @@
+/* BODY STYLES */
+body {
+    font-family: 'Josefin Sans', sans-serif;
+}
+
+/* MENU BUTTONS */
+.options {
+    font-size:26px;
+    list-style-type: none;
+    display: block;
+    padding:10px;
+}
+
+.b-menu {
+    margin-top:50px;
+}
+
+/* ADD FORM STYLES */
+.add-form {
+    margin-left:30px;
+    font-size:18px;
+}
+
+input {
+    width:40%;
+    margin:10px;
+    padding:10px;
+}
+
+input[type=text],input[type=number] {
+    border:3px solid #ccc;
+    -webkit transition:0.5s;
+    transition:0.5s;
+    background-color: #e8eff9;
+}
+
+.submit-btn {
+    width:40%;
+    margin:10px;
+    padding: 10px;
+}
+
+input:focus {
+    border: 3px solid #555;
+}
+
+/* BOOKSHELF STYLES */
+.bookshelf {
+    margin-left:30px;
+    font-size:18px;
+}
+
+.bookshelf ul {
+    list-style-type: none;
+}
+
+.bookshelf ul li {
+    padding:10px;
+}
+
+.book {
+    width:70%;
+    margin-bottom:50px;
+    margin-top:10px;
+}
+
+.book dl dd {
+    margin-left:10px;
+}
+
+.dtTitle {
+    font-size: 24px;
+}
+
+.dtTitle:hover {
+    background-color:white;
+}
+
+.progress-bar {
+    margin-top:-15px;
+}
+
+.editButtons {
+    margin-top:5px;
+}

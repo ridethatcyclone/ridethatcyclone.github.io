@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
+    <link rel="stylesheet" href="style.css" />
+    <title>Bookshelf</title>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <!-- BULK OF PAGE -->
+            <div class="col">
+
+                <!-- EDIT MENU -->
+                <ul class="b-menu">
+                    <li class="btn-default options add-book">Add a Book</li>
+                        <div class="add-form">
+                            <!-- FORM TO ADD BOOKS -->
+                            <form id="add">
+                                Title:<br/>
+                                <input type="text" name="title" id="titleIn"/><br />
+                                Author:<br />
+                                <input type="text" name="author" id="authorIn"/><br />
+                                How many pages are in the book?<br />
+                                <input type="number" name="totalPages" id="totalPagesIn"/><br />
+                                How many pages have you read?<br />
+                                <input type="number" name="pagesRead" id="pagesReadIn"/><br />
+                                <button type="button" class="btn btn-elegant submit-btn" >Submit</button>
+                            </form id="add">
+                        </div>
+
+                    <!-- BOOKSHELF -->
+                    <li class="btn-default options bookshelf-btn">Bookshelf</li>
+                        <div class="bookshelf">
+                            <!-- BOOKS TO BE INSERTED HERE -->
+                        </div>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="main.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</body>
+</html>
