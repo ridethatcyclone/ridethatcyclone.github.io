@@ -205,5 +205,251 @@ public ActionResult Display()
         }
 ```
 
+With that all set, the display page looks like this, when I select the category Bikes and the subcategory Road Bikes:
 
-(strongly-typed vs not....)
+![Image of the display page](display.PNG)
+
+So the next logical thing was to work on the item page, which is what would display when the user selects any item. A *lot* had to go into this particular page, if just because of the fact that many products had optional parts to them. For instance, not all products contain information on the color. On the previous page, it would just leave the table entry blank then. On this one, it would error out, due to the way I assigned the variables.
+
+The basic frame of my Item page looks like this:
+
+```html
+<div class="container">
+  <div class="row">
+
+    <div class="col-md-6">
+      <h4>Description</h4>
+      <p>Product description here.</p>
+    </div>
+
+    <div class="col-md-4 col-md-offset-1">
+      <ul class="list-group">
+        <li class="list-group-item">Price</li>
+        <li class="list-group-item">Product ID</li>
+        <li class="list-group-item">Color</li>
+      </ul>
+    </div>
+
+  </div><br /><br />
+  <div class="row match-col">
+
+    <div class="col-md-11">
+      <div>
+        <h2>Reviews</h2>
+      </div>
+      <hr />
+      <div class="reviews">
+        Reviews here
+      </div>
+    </div>
+
+  </div>
+
+</div>
+```
+
+Then I had to get more complex within that wireframe. Firstly, with the optional parts. To check for these, I simply wrapped each section in an `if` loop to check if the parameter was null, as so:
+
+```html
+@if (ViewBag.ItemDescription != null)
+{
+  @ViewBag.ItemDescription
+}
+else
+{
+  <text>Oops! No description for this item just yet. Check back soon!</text>
+}
+```
+
+The real complexity came in with the reviews, however. Not really because of displaying the reviews, but because I decided I wanted to show the ratings in a visual way, with rating stars. This I ended up sourcing from code I found [here](https://codepen.io/mcallaro88/pen/EWQdRX).
+
+The review div:
+
+```html
+<div class="reviews">
+  @if (ViewBag.HasReviews)
+  {
+    foreach (var item in Model)
+    {
+      if (item.ProductID == ViewBag.ItemID)
+      {
+        <div class="row">
+          <div class="col-md-8">
+            <div class="review">
+              <h4>@item.ReviewerName</h4>
+              <p>@item.Comments</p>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="rating">
+              <div class="rating-full" style="width:@((item.Rating)*20)%">
+                <span>★★★★★</span>
+              </div>
+              <div class="rating-empty">
+                <span>★★★★★</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <hr />
+      }
+    }
+  }
+  else
+  {
+    <p>No reviews for this product yet! Would you like to create one?</p>
+  }
+  <a href="@Url.Action('Create', 'Home', new { @product = ViewBag.ItemID })"><button type="button" class="btn btn-primary btn-lg">Add a Review</button>
+</div>
+```
+
+And the CSS for the stars:
+
+```css
+.rating {
+  unicode-bidi: bidi-override;
+  color: #ccc;
+  font-size: 64px;
+  position: relative;
+  margin: 0;
+  padding: 0;
+}
+
+.rating .rating-full {
+  color: #ffd800;
+  padding: 0;
+  position: absolute;
+  z-index: 1;
+  display: block;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+}
+
+.rating span {
+  display: inline-block;
+}
+
+.rating-empty {
+  padding: 0;
+  display: block;
+  z-index: 0;
+}
+```
+
+The setup for the stars is essentially similar to what I did for my progress bar in an earlier homework. It's two identical divs layed over the top of each other, and one of them is only partially visible (so to speak, it's actually the width that I'm messing with) so that it looks like some stars aren't full.
+
+Finally, the real bulk of this page is in the Controller. This is the longest and ugliest of my controllers, so buckle in.
+
+To start with, a wireframe of the ActionResult. It's just barebones with my comments and no code, and I'll break down each section separately, to keep it small(ish):
+
+```cs
+public ActionResult Item()
+{
+  //Get id from query string
+
+  //Make sure the user actually inputs a request
+
+  //Start of db logic
+
+  //Getting item Product ID
+
+  //Getting item name
+
+  //Getting item description
+
+  //Getting item price
+
+  //Getting item color
+
+  //Check if item has reviews
+
+  //Return view
+}
+```
+
+The first part, getting the id from the query string, is the easiest part and is the same as the other parts that do the same. I then check it to make sure it's valid, because of my aforementioned habit of launching the project from the wrong page.
+
+```cs
+//Get id from query string
+string id = Request.QueryString["product"];
+
+//Make sure the user actually inputs a request
+if (string.IsNullOrEmpty(id))
+{
+  return RedirectToAction("Index");
+}
+```
+
+Then I instantiate the database and get started. First I retrieved the product ID and used that to get the item name, then I put those values into the ViewBag.
+
+```cs
+//Start of db logic
+using (ProductsContext db = new ProductsContext())
+{
+  //Getting item Product ID
+  int pid = int.Parse(id);
+  ViewBag.ItemID = pid;
+
+  //Getting item name
+  string itemName = db.Products.Where(p => p.ProductID == pid).Select(p => p.Name).FirstOrDefault().ToString();
+  ViewBag.ItemName = itemName;
+}
+```
+
+Next I got the item description. This was not something a product necessarily had, so I encased it in a try/catch. I had to move around the tables a little bit, so it took some logic. First I got the product model ID, using the product ID. From that, I got the product description ID. From that, I got the description and added it to the viewbag. If that failed, then the item description was simply set to null.
+
+```cs
+//Getting item description
+try {
+  int pmid = (int)db.Products.Where(p => p.ProductID == pid).Select(p => p.ProductModelID).FirstOrDefault();
+  int descid = (int)db.ProductModelProductDescriptionCultures.Where(p => p.ProductModelID == pmid).Select(p => p.ProductDescriptionID).First();
+  string desc = db.ProductDescriptions.Where(p => p.ProductDescriptionID == descid).Select(p => p.Description).FirstOrDefault().ToString();
+  ViewBag.ItemDescription = desc;
+} catch
+{
+  ViewBag.ItemDescription = null;
+}
+```
+
+For the item price and item color, we're mostly back to simplicity. For color I used a try/catch again to make sure I don't error out, but it's not as complex of logic to find the info.
+
+```cs
+//Getting item price
+decimal price = db.Products.Where(p => p.ProductID == pid).Select(p => p.Product.ListPrice).FirstOrDefault();
+ViewBag.ItemPrice = price;
+
+//Getting item color
+try {
+  string color = db.Products.Where(p => p.ProductID == pid).Select(p => p.Color).FirstOrDefault().ToString();
+  ViewBag.ItemColor = color;
+} catch {
+  ViewBag.ItemColor = null;
+}
+```
+
+Finally, all I had to do was check if the item had reviews or not and return the view with the ProductReviews. To check for reviews, I simply looped through the ProductReviews table and checked if the productID on each review matched the current product. If it did, I set the bool to true and broke from the loop.
+
+```cs
+//Check if item has reviews
+ViewBag.HasReviews = false;
+foreach (var item in db.ProductReviews)
+{
+  if (item.ProductID == pid)
+  {
+    ViewBag.HasReviews = true;
+    break;
+  }
+}
+
+//Return view
+return View(db.ProductReviews.ToList());
+```
+
+Gosh, that was a lot. So finally, that ActionResult is complete. Now our page should work beautifully, and it does:
+
+![Image of the item page](item1.PNG)
+
+![Image of the item page](item2.PNG)
