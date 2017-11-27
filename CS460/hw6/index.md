@@ -132,8 +132,78 @@ With everything all set up for the basic display, this was my page:
 
 ![Image of landing page](landingpage.PNG)
 
+Next up was the page a user is shown once they select a category and a subcategory. All I really needed it to do was list the products that fit the bill, but I decided to add the product ID, the color of the item, and its price. I used a simple table for this, with similar logic to the navbar where I simply looped through each item and generated a table row for every item. For this to work, I had to add `@model IEnumerable<HW6.Product>` to the top of the file, so I could access the products table.
 
+```html
+<h3>@ViewBag.DisplayCat : @ViewBag.DisplaySub</h3>
+<hr />
 
+<table class="table table-striped">
+  <tr>
+    <th>@Html.DisplayNameFor(model => model.Name)</th>
+    <th>@Html.DisplayNameFor(model => model.ProductID)</th>
+    <th>@Html.DisplayNameFor(model => model.Color)</th>
+    <th>@Html.DisplayNameFor(model => model.ListPrice)</th>
+  </tr>
+
+  @foreach (var item in Model)
+  {
+    if (item.ProductSubcategoryID == ViewBag.SubID)
+    {
+      <tr>
+        <td>
+          @Html.ActionLink(
+                @Html.DisplayFor(model => item.Name).ToString(),
+                "Item",
+                "Home",
+                new { @product = item.ProductID },
+                null
+          )
+        </td>
+        <td>@Html.DisplayFor(modelItem => item.ProductID)</td>
+        <td>@Html.DisplayFor(modelItem => item.Color)</td>
+        <td>@Html.DisplayFor(modelItem => item.ListPrice)</td>
+      </tr>
+    }
+  }
+</table>
+```
+
+Then the controller for the Display, which is longer and uglier than the navbar, unfortunately. Essentially what it does is take the query string (which contained the subcategory), checked to make sure it was actually there (so that when I inevitably launched the project from the wrong page, it didn't error out because of not having a subcategory to load)
+
+Then I instantiated the database, pulled product IDs and categories, and used those to return to the page.
+
+```cs
+public ActionResult Display()
+        {
+            //Get subcategory name from query string
+            string DisplaySubcategory = Request.QueryString["PID"];
+
+            //Check validity
+            if (string.IsNullOrEmpty(DisplaySubcategory))
+            {
+                return RedirectToAction("Index");
+            }
+
+            using (ProductsContext db = new ProductsContext())
+            {
+                //Getting the Category and Subcategory ID Numbers (as well as the names, for the heading)
+                int id = db.ProductSubcategories.Where(p => p.Name.Equals(DisplaySubcategory)).Select(p => p.ProductCategoryID).FirstOrDefault();
+                string DisplayCategory = db.ProductCategories.Where(p => p.ProductCategoryID == id).Select(p => p.Name).FirstOrDefault().ToString();
+                int SubcategoryID = db.ProductSubcategories.Where(p => p.Name.Equals(DisplaySubcategory)).Select(p => p.ProductSubcategoryID).FirstOrDefault();
+
+                //Names
+                ViewBag.DisplaySub = DisplaySubcategory;
+                ViewBag.DisplayCat = DisplayCategory;
+
+                //Numbers
+                ViewBag.SubID = SubcategoryID;
+                ViewBag.PrimID = id;
+
+                return View(db.Products.ToList());
+            }
+        }
+```
 
 
 (strongly-typed vs not....)
