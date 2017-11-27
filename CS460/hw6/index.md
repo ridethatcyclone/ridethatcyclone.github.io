@@ -453,3 +453,97 @@ Gosh, that was a lot. So finally, that ActionResult is complete. Now our page sh
 ![Image of the item page](item1.PNG)
 
 ![Image of the item page](item2.PNG)
+
+Now, the only thing left to do was to make sure a user could add reviews! This was probably the easiest part, as it was very straightforward.
+
+First, I created the view. It's just a simple form, although I did struggle with the textbox somewhat. Mostly just finicky CSS things.
+
+```html
+@using (Html.BeginForm())
+{
+  <div class="row">
+    <div class="col-md-4 col-md-offset-2">
+      <div class="form-group">
+        @Html.LabelFor(model => model.ReviewerName, htmlAttributes: new { @class = "control-label" })
+        @Html.EditorFor(model => model.ReviewerName, new { htmlAttributes = new { @class = "form-control input-lg" } })<br />
+        @Html.LabelFor(model => model.EmailAddress, htmlAttributes: new { @class = "control-label" })
+        @Html.EditorFor(model => model.EmailAddress, new { htmlAttributes = new { @class = "form-control input-lg" } })
+        <br />
+        @Html.LabelFor(model => model.Rating, htmlAttributes: new { @class = "control-label" })
+      </div>
+      <br /><br />
+      <div class="row">
+        @for (int i = 0; i < 5; i++)
+        {
+          <div class="col-md-1">
+            @Html.RadioButtonFor(model => model.Rating, i, new { htmlAttributes = new { @class = "form-control input-lg", @style = "padding:5px;", @value = i } })<br />
+            @i
+          </div>
+        }
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="form-group">
+        @Html.LabelFor(model => model.Comments, htmlAttributes: new { @class = "control-label" })
+        @Html.TextAreaFor(model => model.Comments, new { @class = "form-control", @rows = "10" })
+      </div>
+    </div>
+
+  </div>
+
+  <div class="row">
+    <br />
+    <div class="col-md-5"></div>
+    <div class="col-md-1"><input type="submit" class="btn btn-primary btn-lg" value="Submit" /></div>
+    <div class="col-md-5"></div>
+  </div>
+}
+```
+
+Then I just had to make the two Action controller methods, the GET and POST. They're both pretty straightforward as well. The GET method just checks the query string and returns the view depending on whether or not it's valid. The post is of course more complicated, but it's less complicated than the Item controller, so...
+
+```cs
+public ActionResult Create()
+{
+  string id = Request.QueryString["product"];
+  if (string.IsNullOrEmpty(id))
+  {
+    return RedirectToAction("Index");
+  }
+  return View();
+}
+
+public ActionResult Create([Bind(Include="ReviewerName, EmailAddress, Rating, Comments")] ProductReview review)
+{
+  string spid = Request.QueryString["product"];
+  int pid = int.Parse(spid);
+  using (ProductsContext db = new ProductsContext())
+  {
+    DateTime now = DateTime.Now;
+    review.ReviewDate = now;
+    review.ModifiedDate = now;
+    review.ProductID = pid;
+    review.Product = db.Products.Where(p => p.ProductID == pid).FirstOrDefault();
+
+    if (ModelState.IsValid)
+    {
+      db.ProductReviews.Add(review);
+      db.SaveChanges();
+      return RedirectToAction("Item", new { product = review.ProductID });
+    }
+
+    return View(review);
+  }
+}
+```
+
+And that's all it was! The page looks like this:
+
+![Image of review form](review1.PNG)
+
+![Image of review form filled](review2.PNG)
+
+![Image of review posted](review3.PNG)
+
+It's still a little finicky, but it works! And phew, that was a lot of unfortunate-looking code.
