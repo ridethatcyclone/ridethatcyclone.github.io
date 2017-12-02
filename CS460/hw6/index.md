@@ -250,7 +250,7 @@ The basic frame of my Item page looks like this:
 
 Then I had to get more complex within that wireframe. Firstly, with the optional parts. To check for these, I simply wrapped each section in an `if` loop to check if the parameter was null, as so:
 
-```html
+```cs
 @if (ViewBag.ItemDescription != null)
 {
   @ViewBag.ItemDescription
