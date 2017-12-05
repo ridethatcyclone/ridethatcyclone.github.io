@@ -225,6 +225,8 @@ public ActionResult Edit([Bind(Include = "ArtistID,Name,BirthDate,BirthCity")] A
 }
 ```
 
+Note: the better way to do this is detailed in my [C# Notes](https://ridethatcyclone.github.io/CS460/notes/cs/). Went back and figured it out, but the project as deployed still uses this method. Oh, well.
+
 ### Wrestling with AJAX
 
 Then, onto AJAX. My nemesis. This was really difficult for me. I understand Javascript and JQuery pretty well, but I struggled a lot with the ajax. I think a lot of my issues were pretty nitpicky to be honest (spelling things wrong, linking to the wrong controller, etc). I'm just glad it works now!
