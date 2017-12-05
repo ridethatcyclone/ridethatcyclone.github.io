@@ -79,3 +79,18 @@ Other useful code snippets:
 10. Select the database you created
 11. Select tables to import (all, for this one)
 12. Make sure Web.config has connection string
+
+
+### Attributes and Attribute Checking
+
+```cs
+[Required]
+[StringLength(64, ErrorMessage="Name cannot be longer than 64 characters")]
+[Display(Name="Artist's Name")]
+public string Name { get; set; }
+
+[Column(TypeName = "date")]
+[Display(Name="Date of Birth")]
+[DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode=true)]
+public DateTime BirthDate { get; set; }
+```
