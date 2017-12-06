@@ -8,9 +8,10 @@ layout: default
 For this homework we were tasked with creating a single-page website that uses the Giphy API and AJAX to return search results in the form of gifs.
 
 ## Links
-1. [Home]()
-2. [Assignment Page]()
-3. [Code Repository]()
+1. [Home](https://ridethatcyclone.github.io/)
+2. [Assignment Page](http://www.wou.edu/~morses/classes/cs46x/assignments/HW7.html)
+3. [Code Repository](https://github.com/ridethatcyclone/CS460/tree/master/HW7)
+4. [Video of Site](https://www.youtube.com/watch?v=hSQMhSZKbCY&feature=youtu.be)
 
 ### Getting Started
 
