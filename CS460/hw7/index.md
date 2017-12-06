@@ -103,3 +103,130 @@ My CSS for this one was:
 ```
 
 Again, almost all of this was just to center the page and make it look slightly nicer. It still is a pretty ugly webpage, but not as ugly as it was. Which is... something?
+
+
+### Using Giphy's API
+
+One thing I ran into was hiding my Giphy API key. The solution I came up with is fairly simple but it definitely works. I have a .config file outside of my repository with the following code in it:
+
+```html
+<appSettings>
+	<add key="GiphyAPIKey" value="#" />
+</appSettings>
+```
+
+Where, obviously, the value is my API key. Then in my Web.config in my project, I simply reference that file by path with `<appSettings file="C:\. . ."></appSettings>`. And that works! Then to use my API key, in my controller I passed it as a variable. My Controller itself is extremely simple, just a few lines of code:
+
+```cs
+public class HomeController : Controller
+    {
+        public ActionResult Index()
+        {
+            string GiphyAPIKey = System.Web.Configuration.WebConfigurationManager.AppSettings["GiphyAPIKey"];
+            ViewBag.GiphyKey = GiphyAPIKey;
+            return View();
+        }
+
+    }
+```
+
+So then I have my key in the ViewBag for use in the View (or the javascript..). Next came the scripting of this search. This is where the bulk of the assignment lives, and is also what gave me the most problems. I decided to go ultra simple just to make things easier on myself and have not implemented pagination of any sort. The search only shows the first nine gifs returned, no matter what.
+
+```javascript
+var searchString = '';
+var requestLink = '';
+var key = $("#key").data(value);
+
+function main() {
+  $('#submitButton').on('click', function() {
+    // LOGIC FOR SEARCH HERE
+  });
+}
+
+$(document).ready(main);
+```
+
+That is the basic layout of my javascript. The logic in the anonymous function on the button click is the most complicated bit, but even that is actually pretty straightforward once you get down to the barebones. An important aside on this one: to get my API key value from the controller to my javascript, I had to pass it through the view. The best way I could think of to do this was pass it as a hidden value in an invisible form object. This I actually put in my shared layout page. It simply looks like this:
+
+```Html
+<input type="hidden" id="key" data-value="@ViewBag.GiphyKey" />
+```
+
+That way the javascript has something from the DOM it can parse for my key, and I'm not just placing the raw data of the key itself somewhere it can be taken.
+
+Moving on, the logic for my javascript:
+
+```javascript
+$('#submitButton').on('click', function() {
+  // Check if there's anything in the search bar
+  if (!($('#sbar').val())) {
+    console.log("Nothing entered.");
+  }
+  else {
+    // Bulk of the logic goes here. A search term was successfully found...
+
+    // This checks which radio button is checked, for if the search results should be animated or not.
+    var animated = $("input[name='animated']:checked").val();
+
+    // Replaces all the spaces in the search query with +
+    searchString = $("#sbar").val().replace(" ", "+");
+    $("#sbar").val();
+
+    // Builds the link
+    requestLink = "http://api.giphy.com/v1/gifs/search?q=" + searchString + "&api+key=" + key;
+
+    // Empties out the div for the gifs
+    $(".gifRow").html(null);
+
+    // AJAX
+    $.ajax({
+      type: 'GET',
+      url: requestLink,
+      dataType: 'json',
+      success: function(response) {
+        console.log('success', response) // Just for my own purposes, can be removed
+
+        // Checking if it should be animated. Note that the input is not actually a bool, so I'm comparing as strings
+        if (animated == 'true') {
+          for (i = 0; i < 9; i++) {
+            if (i < 3) {
+              $('#topRow').append('<div class="col-md-4 gifCol"><img src=" + response.data[i].images.fixed_width.url + " class="displayGif"></div>');
+            }
+            else if (i >= 3 && i < 6) {
+              $('#middleRow').append(. . .);
+            }
+            else {
+              $('#bottomRow').append(. . .);
+            }
+          }
+        }
+        else {
+          // Same logic but with fixed_width_still.url instead.
+        }
+      }
+    });
+  }
+})
+```
+
+And that's it! I create a searchString and a requestLink variables to hold those two things and initialize them to empty strings. Then the key I pull from my shared layout html file. In main, I made an onclick function for my submit button. Note that it's not actually a submit button, as I didn't want the page to refresh. Because of that, and because it's an onclick function, the search *will not* work if the user enters a search string and hits enter on their keyboard. I could have added an event listener for that as well but as it was I was really just focused on getting basic functionality down.
+
+Within the onclick function, I first check to make sure the search bar isn't empty. If the user didn't enter anything, I don't want to perform a search after all!
+
+Then, once I've confirmed that the user did enter something, I need to pull a couple of variables. First, I check which radio button the user has checked. I put the value from that into a variable, `animated`, so that I may use it later. Note that though I gave the radio buttons the values of true and false, they are actually string values, so I can't compare them as bools.
+
+Next I added the value from the search bar (that is, what the user wants to search) into my searchString variable, replacing all of the spaces with + so that it will work in the URL search. Finally, I create the requestLink using my giphy API link, the searchString, and my key value.
+
+With all my values set, I clear out the div that the gifs will be held in and start my ajax function.
+
+The ajax is fairly straightforward, once you have it figured out. I give it the requestLink I've just built, and on a successful return I run through some simple logic to append the gifs onto the HTML gifRows.
+
+And just like that, my page is good to go!
+
+Here's what it looks like without the search being performed:
+
+![Image of blank site](site1.PNG)
+
+And here it is with a search (for 'cat', the most popular type of gifs) performed:
+
+![Image of site after searching for cat gifs](catsearch.PNG)
