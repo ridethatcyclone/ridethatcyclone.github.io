@@ -207,7 +207,7 @@ public ActionResult Display()
 
 With that all set, the display page looks like this, when I select the category Bikes and the subcategory Road Bikes:
 
-![Image of the display page](display.PNG)
+![Image of the display page](displaypage.PNG)
 
 So the next logical thing was to work on the item page, which is what would display when the user selects any item. A *lot* had to go into this particular page, if just because of the fact that many products had optional parts to them. For instance, not all products contain information on the color. On the previous page, it would just leave the table entry blank then. On this one, it would error out, due to the way I assigned the variables.
 
