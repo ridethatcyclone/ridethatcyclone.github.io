@@ -62,7 +62,7 @@ To get started I just began with a simple HTML layout with a form for the search
     </div>
 
 </div>
-
+```
 
 I used an excessive amount of divs basically with the goal of getting the entire site centered. Which it is, so that's a win for me! Then I just had a title, the form, and a div for my gifs to be displayed.
 
