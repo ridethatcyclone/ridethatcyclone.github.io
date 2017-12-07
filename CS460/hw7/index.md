@@ -285,4 +285,4 @@ $.ajax({
 });
 ```
 
-And just like that, the database works! Easy peasy.
+And just like that, the database works! Easy peasy. Sadly it is, of course, a much simpler database than what the assignment page requested, but I was mostly just trying to get it done as fast as possible so my assignment wasn't totally missing a database. Hopefully I'll get the full thing (with IP logging and so on) implemented soon.
