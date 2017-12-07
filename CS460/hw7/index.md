@@ -231,3 +231,58 @@ Here's what it looks like without the search being performed:
 And here it is with a search (for 'cat', the most popular type of gifs) performed:
 
 ![Image of site after searching for cat gifs](catsearch.PNG)
+
+Then the only thing left to do (that, honestly, I forgot about until *way* later than I should have) was to add the database to log all the searches performed. This was super simple to do. The database is only one table, with a SearchID, a SearchPhrase, and a Timestamp. I didn't include the Animated vs Still thing because... I didn't think about it. To be fair to myself, I added this database in like record time, soooo...
+
+The up (and down, all in one) script for SQL:
+
+```SQL
+DROP TABLE IF EXISTS dbo.Searches
+
+CREATE TABLE dbo.Searches (
+  SearchID INT IDENTITY(1,1) NOT NULL,
+  SearchPhrase NVARCHAR(128) NOT NULL,
+  Timestamp DATETIME NOT NULL,
+
+  CONSTRAINT[PK_dbo.Searches] PRIMARY KEY CLUSTERED (SearchID ASC)
+);
+```
+
+And then I made a function in my controller to handle the logic of adding to the database, and a second ActionResult function for my Index page, this one to POST.
+
+```cs
+[HttpPost]
+public ActionResult Index(string search)
+{
+    AddLog(search);
+    return View();
+}
+
+public void AddLog(string search)
+{
+    var log = new Search();
+    log.SearchPhrase = search;
+    log.Timestamp = DateTime.Now;
+
+    if (ModelState.IsValid)
+    {
+        db.Searches.Add(log);
+        db.SaveChanges();
+    }
+}
+```
+
+Probably could have done the AddLog function simply within the Index() logic, but it seemed neater this way. After that was ready, all that was left was to do the logic in ajax. Initially I thought there might be a way for me to call this in the same ajax method I used to get the data for the webpage, but once I started working on it that seemed unnecessarily complex. Instead I just made a second ajax call, this one a POST instead of a GET, and the logic on it couldn't be simpler:
+
+```javascript
+$.ajax({
+    type: 'POST',
+    url: '/Home/Index/',
+    data: { search: searchString },
+    success: function () {
+        console.log("Yay");
+    }
+});
+```
+
+And just like that, the database works! Easy peasy.
