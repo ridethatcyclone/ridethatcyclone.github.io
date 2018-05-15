@@ -9,7 +9,7 @@ My name is Abby Horner, and I am a senior in Western Oregon University's Compute
 * [BitBucket](https://bitbucket.org/hornera/)
 
 ### Navigation
-* [Senior Sequence Portfolio]((https://ridethatcyclone.github.io/CS460)
+* [Senior Sequence Portfolio](https://ridethatcyclone.github.io/CS460)
 * [Operating Systems and Networking Portfolio](#)
 
 ### What's with the name?
