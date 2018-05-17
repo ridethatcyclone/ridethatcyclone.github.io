@@ -8,7 +8,7 @@ This course provides an introduction to Operating Systems as managers of systems
 
 ### Labs
 
-1. [Lab 1: fork() and pid() system calls in Ubuntu C](https://ridethatcyclone.github.io/CS365/lab1)
-2. [Lab 2: writing a shell in C](https://ridethatcyclone.github.io/CS365/lab2)
-3. [Lab 3: server and client in Java](https://ridethatcyclone.github.io/CS365/lab3)
-4. [Lab 4: Producer and Consumer multithread/Single Lane Bridge problem in Java](https://ridethatcyclone.github.io/CS365/lab4)
+1. [Lab 1: fork() and pid() system calls in Ubuntu C](https://bitbucket.org/hornera/cs365_portfolio/src/master/lab1/)
+2. [Lab 2: writing a shell in C](https://bitbucket.org/hornera/cs365_portfolio/src/master/lab2/))
+3. [Lab 3: server and client in Java](#)
+4. [Lab 4: Producer and Consumer multithread/Single Lane Bridge problem in Java](#)
